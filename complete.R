@@ -12,5 +12,22 @@ complete <- function(directory, id = 1:332) {
         ## ...
         ## where 'id' is the monitor ID number and 'nobs' is the
         ## number of complete cases
+        rawdata <- vector("list", length(id))
+        returnvector <- data.frame(id=c(id))
+        for(i in 1:length(id)){
+            if(i < 10){
+                filename <- paste("00",i,".csv",sep="")
+            }
+            else if(i >= 10 && i < 100) {
+                filename <- paste("0",i,".csv",sep="")
+            }
+            else {
+                filename <- paste(i,".csv",sep="")
+            }
+            filepath <- paste(directory,"/",filename,sep="")   
+            rawdata[[i]] <- read.csv(filepath)
+            returnvector$nobs[[i]] <- sum(as.numeric(complete.cases(rawdata[[i]])))
+        }
+        print(returnvector)
 }
 

@@ -1,6 +1,6 @@
 pollutantmean <- function(directory, pollutant, id = 1:332) {
         filepath <- vector("list", length(id))
-        for(i in id){
+        for(i in 1:length(id)){
             if(i < 10){
                 filename <- paste("00",i,".csv",sep="")
             }
@@ -13,6 +13,5 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
             filepath[[i]] <- paste(directory,"/",filename,sep="")       
         }
         rawdata <- do.call("rbind", lapply(filepath, read.csv, header = TRUE))
-        print(rawdata)
-        mean(rawdata[c(pollutant)], na.rm=TRUE)
+        colMeans(rawdata[c(pollutant)], na.rm=TRUE)
 }
