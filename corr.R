@@ -9,4 +9,10 @@ corr <- function(directory, threshold = 0) {
 
         ## Return a numeric vector of correlations
         ## NOTE: Do not round the result!
+
+    testThreshold <- function(file, threshold){
+        readFile <- na.omit(read.csv(file))
+        if(threshold <= nrow(readFile)) addFile <- cor(readFile$nitrate, readFile$sulfate)
+    }
+    readingVector <- na.omit(as.numeric(do.call("rbind", lapply(list.files(directory, full.names=TRUE),testThreshold, threshold=threshold))))
 }
