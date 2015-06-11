@@ -15,19 +15,19 @@ complete <- function(directory, id = 1:332) {
         rawdata <- vector("list", length(id))
         returnvector <- data.frame(id=c(id))
         for(i in 1:length(id)){
-            if(i < 10){
-                filename <- paste("00",i,".csv",sep="")
+            if(id[i] < 10){
+                filename <- paste("00",id[i],".csv",sep="")
             }
-            else if(i >= 10 && i < 100) {
-                filename <- paste("0",i,".csv",sep="")
+            else if(id[i] >= 10 && id[i] < 100) {
+                filename <- paste("0",id[i],".csv",sep="")
             }
             else {
-                filename <- paste(i,".csv",sep="")
+                filename <- paste(id[i],".csv",sep="")
             }
             filepath <- paste(directory,"/",filename,sep="")   
             rawdata[[i]] <- read.csv(filepath)
             returnvector$nobs[[i]] <- sum(as.numeric(complete.cases(rawdata[[i]])))
         }
-        print(returnvector)
+        return(returnvector)
 }
 
